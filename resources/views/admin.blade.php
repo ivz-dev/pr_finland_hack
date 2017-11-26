@@ -110,7 +110,7 @@
                             </div>
                         </div>
 
-                        <button type="submit">Save</button>
+                        <button type="submit" class="btn-success">Save</button>
                     </form>
                 </div>
 
