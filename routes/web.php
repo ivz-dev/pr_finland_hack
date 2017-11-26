@@ -12,3 +12,7 @@
 */
 
 Route::get('/', 'Main@show');
+
+Route::get('admin/', function () {
+    return view('admin');
+});
