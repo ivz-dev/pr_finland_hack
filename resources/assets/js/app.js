@@ -151,16 +151,9 @@ $(document).ready(function () {
     });
 
     function renderStops(i) {
-        currentPosition.setPosition({
-            lat: parseFloat(stops[i]['Geometry']['Latitude']) + 0.004,
-            lng: parseFloat(stops[i]['Geometry']['Longitude'])
-        });
-        map.setCenter({
-            lat: parseFloat(stops[i]['Geometry']['Latitude']),
-            lng: parseFloat(stops[i]['Geometry']['Longitude'])
-        });
 
         var html = "";
+        var time = 0;
         for (let k = i; k < stops.length; k++) {
             if (k == 0) {
                 var html = html + "<li class='station active'>" + stops[k]['Geometry']['name'] + "</li>";
@@ -168,13 +161,129 @@ $(document).ready(function () {
                 if (k == i) {
                     var html = html + "<li class='station active'>" + stops[k]['Geometry']['name'] + "</li>";
                 } else {
-                    var html = html + "<li class='station'>" + stops[k]['Geometry']['name'] + "<span class='time'>17 min</span> </li> ";
+
+
+                    let lat1 = parseFloat(stops[k-1]['Geometry']['Latitude']);
+                    let lng1 = parseFloat(stops[k-1]['Geometry']['Longitude']);
+
+                    let lat2 = parseFloat(stops[k]['Geometry']['Latitude']);
+                    let lng2 = parseFloat(stops[k]['Geometry']['Longitude']);
+
+
+                    let distance = Math.sqrt(Math.pow(lat2 - lat1, 2) + Math.pow(lng2 - lng1, 2)) * 1000000 / 60;
+                    time  = time + parseInt(distance / parseInt($(".speed").html()));
+
+                    var html = html + "<li class='station'>" + stops[k]['Geometry']['name'] + "<span class='time'>"+ time +"min</span> </li> ";
                 }
             }
         }
 
         $(".stations").html(html);
     }
+
+
+// called when the client connects
+    function onConnect() {
+        // Once a connection has been made, make a subscription and send a message.
+        console.log("onConnect");
+        client.subscribe("bus-api"); //назва топіка
+        client.subscribe("temp");
+        client.subscribe("humid");
+        client.subscribe("preasure");
+        client.subscribe("speed");
+    }
+
+// called when the client loses its connection
+    function onConnectionLost(responseObject) {
+        if (responseObject.errorCode !== 0) {
+            console.log("onConnectionLost:", responseObject.errorMessage);
+            setTimeout(function () {
+                client.connect()
+            }, 5000);
+        }
+    }
+
+// called when a message arrives
+    function onMessageArrived(message) {
+
+        var date = new Date;
+
+        let minutes = date.getMinutes();
+
+        if(minutes < 10 ) {
+            minutes = '0' + minutes;
+        }
+        let hour = date.getHours();
+
+        $(".time-current").html(`${hour}:${minutes}`);
+
+
+        if(message.destinationName == "temp")
+        {
+            $(".temp").html(message.payloadString);
+        }
+
+        if(message.destinationName == "humid")
+        {
+            $(".humid").html(message.payloadString);
+        }
+
+        if(message.destinationName == "speed")
+        {
+            $(".speed").html(message.payloadString);
+        }
+
+        if(message.destinationName == "preasure")
+        {
+            $(".preasure").html(message.payloadString);
+        }
+
+        if(message.destinationName == "bus-api")
+        {
+            console.log(message.payloadString);
+
+            var lat = parseFloat((message.payloadString).split(',')[0]);
+            var lng = parseFloat((message.payloadString).split(',')[1]);
+
+            for (let i = 0; i < stops.length; i++) {
+                if (lat == stops[i]['Geometry']['Latitude'] && lng == stops[i]['Geometry']['Longitude']) {
+                    renderStops(i);
+                }
+            }
+
+            currentPosition.setPosition({
+                lat: lat + 0.004,
+                lng: lng
+            });
+            map.setCenter({
+                lat: lat,
+                lng: lng
+            });
+        }
+
+
+    }
+
+    function onFailure(invocationContext, errorCode, errorMessage) {
+        var errDiv = document.getElementById("error");
+        errDiv.textContent = "Could not connect to WebSocket server, most likely you're behind a firewall that doesn't allow outgoing connections to port 37501";
+        errDiv.style.display = "block";
+    }
+
+    var clientId = "ws" + Math.random();
+// Create a client instance
+    var client = new Paho.MQTT.Client("m14.cloudmqtt.com", 36567, clientId);
+// set callback handlers
+    client.onConnectionLost = onConnectionLost;
+    client.onMessageArrived = onMessageArrived;
+// connect the client
+    client.connect({
+        useSSL: true,
+        userName: "dmhetpyq",
+        password: "wYYKzkFv6hH6",
+        onSuccess: onConnect,
+        onFailure: onFailure
+    });
 
 });
 
@@ -234,42 +343,6 @@ loadGoogleMapsApi().then(function (googleMaps) {
 
 
 
-// called when the client connects
-function onConnect() {
-    // Once a connection has been made, make a subscription and send a message.
-    console.log("onConnect");
-    client.subscribe("bus-api"); //назва топіка
-}
-// called when the client loses its connection
-function onConnectionLost(responseObject) {
-    if (responseObject.errorCode !== 0) {
-        console.log("onConnectionLost:", responseObject.errorMessage);
-        setTimeout(function() { client.connect() }, 5000);
-    }
-}
-// called when a message arrives
-function onMessageArrived(message) {
-
-}
-function onFailure(invocationContext, errorCode, errorMessage) {
-    var errDiv = document.getElementById("error");
-    errDiv.textContent = "Could not connect to WebSocket server, most likely you're behind a firewall that doesn't allow outgoing connections to port 37501";
-    errDiv.style.display = "block";
-}
-var clientId = "ws" + Math.random();
-// Create a client instance
-var client = new Paho.MQTT.Client("m14.cloudmqtt.com", 36567, clientId);
-// set callback handlers
-client.onConnectionLost = onConnectionLost;
-client.onMessageArrived = onMessageArrived;
-// connect the client
-client.connect({
-    useSSL: false,
-    userName: "dmhetpyq",
-    password: "wYYKzkFv6hH6",
-    onSuccess: onConnect,
-    onFailure: onFailure
-});
 
 
 

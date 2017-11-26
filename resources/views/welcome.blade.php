@@ -36,34 +36,30 @@
 
     <div class="sensor-data">
         <div class="sensor_item">
-            <div class="caption" style="width: 100%; text-align: center; font-size: 56px">07:32</div>
+            <div class="caption time-current" style="width: 100%; text-align: center; font-size: 56px">07:32</div>
         </div>
 
         <div class="sensor_item">
             <div class="caption">Temperature:</div>
-            <div class="value">25 C</div>
+            <div class="value temp">25 C</div>
         </div>
 
         <div class="sensor_item">
             <div class="caption">Humidity:</div>
-            <div class="value">25 C</div>
+            <div class="value humid">25 C</div>
         </div>
 
         <div class="sensor_item">
             <div class="caption">Pressure:</div>
-            <div class="value">25 C</div>
+            <div class="value preasure">25 C</div>
         </div>
 
         <div class="sensor_item">
             <div class="caption">Speed:</div>
-            <div class="value">25 C</div>
+            <div class="value speed">25 C</div>
         </div>
     </div>
 
-
-    <button id="ok">
-        ok
-    </button>
 </div>
 
 
