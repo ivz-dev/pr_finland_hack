@@ -80,32 +80,38 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="header">
-                                <h4 class="title">Users Behavior</h4>
-                                <p class="category">24 Hours performance</p>
-                            </div>
-                            <div class="content">
-                                <div class="form-group">
-                                    <label for="sel1">Bus route:</label>
-                                    <select class="form-control" id="sel1">
-                                        <option>324</option>
-                                        <option>365</option>
-                                        <option>235</option>
-                                        <option>148</option>
-                                    </select>
-                                    <label class="radio-inline"><input type="radio" name="optradio">First station</label>
-                                    <label class="radio-inline"><input type="radio" name="optradio">Last station</label>
-
-                                    <h3>Commercial:</h3>
-                                    <textarea class="form-control" rows="10" id="commercial"></textarea>
+                    <form action="">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="header">
+                                    <h4 class="title">Users Behavior</h4>
+                                    <p class="category">24 Hours performance</p>
                                 </div>
+                                <div class="content">
+                                    <div class="form-group">
+                                        <label for="sel1">Bus route:</label>
+                                        <select class="form-control" id="sel1">
+                                            <option>23</option>
+                                            <option>68</option>
+                                            <option>235</option>
+                                            <option>148</option>
+                                        </select>
+                                        <label class="radio-inline"><input type="radio" name="optradio">Forward direction</label>
+                                        <label class="radio-inline"><input type="radio" name="optradio">Reverse direction</label>
 
+                                        <h3>Customer code:</h3>
+                                        <textarea class="form-control" rows="10" id="commercial"></textarea>
+
+                                        <h3>Interval (sec):</h3>
+                                        <input type="number" name="frequency" class="inline">
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
-                    </div>
+
+                        <button type="submit">Save</button>
+                    </form>
                 </div>
 
 
@@ -114,38 +120,6 @@
             </div>
         </div>
 
-
-        <footer class="footer">
-            <div class="container-fluid">
-                <nav class="pull-left">
-                    <ul>
-                        <li>
-                            <a href="#">
-                                Home
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                Company
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                Portfolio
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                Blog
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-                <p class="copyright pull-right">
-                    &copy; <script>document.write(new Date().getFullYear())</script> <a href="http://www.creative-tim.com">Creative Tim</a>, made with love for a better web
-                </p>
-            </div>
-        </footer>
 
     </div>
 </div>
