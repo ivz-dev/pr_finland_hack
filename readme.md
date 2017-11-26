@@ -1,6 +1,6 @@
 # Brilliant Bus Display | Junction 2017
 
-##Introduction 
+## Introduction 
  
  Today transport needs a re-integration by implementing new technologies in its work. In the Internet era we have more and more tasks that need to be solved. The main challenge of our team is to make a transport screens more efficient and informative. We have tried to use provided information as effective as possible to reach a maximum result. 
  
