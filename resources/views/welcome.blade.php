@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <title>Laravel</title>
-
+    <title>Brilliant Bus Display</title>
 
 </head>
 <body>
@@ -57,6 +56,11 @@
         <div class="sensor_item">
             <div class="caption">Speed:</div>
             <div class="value speed">25 C</div>
+        </div>
+
+        <div class="qr-code">
+
+            <img src="/img/qr_code.png" alt="">
         </div>
     </div>
 

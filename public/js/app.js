@@ -11401,7 +11401,7 @@ $(document).ready(function () {
                     var distance = Math.sqrt(Math.pow(lat2 - lat1, 2) + Math.pow(lng2 - lng1, 2)) * 1000000 / 60;
                     time = time + parseInt(distance / parseInt($(".speed").html()));
 
-                    var html = html + "<li class='station'>" + stops[k]['Geometry']['name'] + "<span class='time'>" + time + "min</span> </li> ";
+                    var html = html + "<li class='station'>" + stops[k]['Geometry']['name'] + "<span class='time'>" + time + " min</span> </li> ";
                 }
             }
         }
